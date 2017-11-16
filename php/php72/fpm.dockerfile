@@ -150,7 +150,11 @@ RUN set -xe \
 	\
 # https://github.com/docker-library/php/issues/443
 	&& pecl update-channels \
-	&& rm -rf /tmp/pear ~/.pearrc
+	&& rm -rf /tmp/pear ~/.pearrc \
+	&& pecl install redis \
+	&& docker-php-ext-enable redis \
+	&& docker-php-ext-install pcntl \
+	&& docker-php-ext-install mcrypt
 
 
 ENTRYPOINT ["docker-php-entrypoint"]
