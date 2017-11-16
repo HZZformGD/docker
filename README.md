@@ -1,6 +1,11 @@
 # docker
 my dockerfile
 
+## 安装
+```shell
+
+```
+
 ## 删除所有容器
 删除
 ```shell

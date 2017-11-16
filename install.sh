@@ -23,12 +23,16 @@ alias php7nts='sudo docker run -it --rm --name my-running-script -v "$PWD":/usr/
 echo alias php7nts='sudo docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp php:7.2-rc-fpm-alpine3.6 php' >> ~/.bashrc
 source ~/.bashrc
 
+# TODO 使用dockerfile编译拓展
+# TODO 抽取php配置文件
+
 #7.2zts
+
+#swoole
 
 #5.6 fpm
 
 #5.3 fpm
-
 
 #mysql
 

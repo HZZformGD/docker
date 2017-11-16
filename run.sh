@@ -1,6 +1,14 @@
 #!/bin/bash
 
-#phpfpm
+#redis 
+docker run -p 6379:6379 --name redis -d redis:alpine
+
+#memcached
+
+#mysql
+
+#phpfpm link mysql redis
+docker run -p 9000:9000 --name phpfpm -v /www:/usr/share/nginx/html:rw --link redis:redis --link mysql:mysql -d php:7.2-rc-fpm-alpine3.6
 docker run -p 9000:9000 --name phpfpm -v /www:/usr/share/nginx/html:rw -d php:7.2-rc-fpm-alpine3.6
 
 #nginx link phpfpm
@@ -15,7 +23,7 @@ function stop(){
     docker stop phpfpm && sudo docker rm phpfpm    
 }
 
-function restart()[
+function restart(){
     docker restart nginx 
     docker restart phpfpm   
-]
+}
