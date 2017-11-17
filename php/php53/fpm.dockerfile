@@ -33,11 +33,12 @@ ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
-ENV GPG_KEYS 0BD78B5F97500D450838F95DFE857D9A90D90EC1 6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3
+# ENV GPG_KEYS 0BD78B5F97500D450838F95DFE857D9A90D90EC1 6E4F6AB321FDC07F2C332E3AC2BF0BC433CFC8B3
+ENV GPG_KEYS 0A95E9A026542D53835E3F3A7DEC4E69FC9C83D7 0B96609E270F565C13292B24C13C70B87267B52D
 
-ENV PHP_VERSION 5.6.32
-ENV PHP_URL="https://secure.php.net/get/php-5.6.32.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-5.6.32.tar.xz.asc/from/this/mirror"
-ENV PHP_SHA256="8c2b4f721c7475fb9eabda2495209e91ea933082e6f34299d11cba88cd76e64b" PHP_MD5=""
+ENV PHP_VERSION 5.3.27
+ENV PHP_URL="https://secure.php.net/get/php-5.3.27.tar.xz/from/this/mirror" PHP_ASC_URL="https://secure.php.net/get/php-5.3.27.tar.xz.asc/from/this/mirror"
+# ENV PHP_SHA256="5ecd737fc79ad33b5c79a9784c0b4211d211ba682d4d721ac6ce975907a5b12b" PHP_MD5=""
 
 COPY docker-php-source /usr/local/bin/
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
@@ -77,15 +78,15 @@ RUN set -xe; \
 		echo "$PHP_MD5 *php.tar.xz" | md5sum -c -; \
 	fi; \
 	\
-	if [ -n "$PHP_ASC_URL" ]; then \
-		wget -O php.tar.xz.asc "$PHP_ASC_URL"; \
-		export GNUPGHOME="$(mktemp -d)"; \
-		for key in $GPG_KEYS; do \
-			gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-		done; \
-		gpg --batch --verify php.tar.xz.asc php.tar.xz; \
-		rm -rf "$GNUPGHOME"; \
-	fi; \
+	# if [ -n "$PHP_ASC_URL" ]; then \
+	# 	wget -O php.tar.xz.asc "$PHP_ASC_URL"; \
+	# 	export GNUPGHOME="$(mktemp -d)"; \
+	# 	for key in $GPG_KEYS; do \
+	# 		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+	# 	done; \
+	# 	gpg --batch --verify php.tar.xz.asc php.tar.xz; \
+	# 	rm -rf "$GNUPGHOME"; \
+	# fi; \
 	\
 	apk del .fetch-deps \
 	\
@@ -96,7 +97,8 @@ RUN set -xe; \
 		libedit-dev \
 		openssl-dev \
 		libxml2-dev \
-		sqlite-dev \
+		# sqlite-dev \
+		mysql-dev \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
@@ -122,6 +124,7 @@ RUN set -xe; \
 		--with-libedit \
 		--with-openssl \
 		--with-zlib \
+		--with-pdo-mysql \
 		\
 # bundled pcre is too old for s390x (which isn't exactly a good sign)
 # /usr/src/php/ext/pcre/pcrelib/pcre_jit_compile.c:65:2: error: #error Unsupported architecture
@@ -135,7 +138,7 @@ RUN set -xe; \
 	&& pecl update-channels \
 	&& pecl install redis \
 	&& docker-php-ext-enable redis \
-	&& docker-php-ext-install pcntl shmop posix \
+	# && docker-php-ext-install pcntl shmop posix \
 	\ 	
 	&& cd / \
 	&& docker-php-source delete \
@@ -176,7 +179,7 @@ RUN set -xe; \
 		echo '; if we send this to /proc/self/fd/1, it never appears'; \
 		echo 'access.log = /proc/self/fd/2'; \
 		echo; \
-		echo 'clear_env = no'; \
+		# echo 'clear_env = no'; \
 		echo; \
 		echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
 		echo 'catch_workers_output = yes'; \
@@ -186,7 +189,7 @@ RUN set -xe; \
 		echo 'daemonize = no'; \
 		echo; \
 		echo '[www]'; \
-		echo 'listen = [::]:9000'; \
+		# echo 'listen = [::]:9000'; \
 	} | tee php-fpm.d/zz-docker.conf
 
 ENTRYPOINT ["docker-php-entrypoint"]
