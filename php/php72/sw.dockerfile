@@ -156,8 +156,8 @@ RUN set -xe \
 	&& pecl update-channels \
 	&& pecl install redis \
 	&& docker-php-ext-enable redis \
-	&& pecl install memcached \
-	&& docker-php-ext-enable memcached \
+	# && pecl install memcached \
+	# && docker-php-ext-enable memcached \
 	&& docker-php-ext-install pcntl shmop posix \
 	# && docker-php-ext-install mcrypt \
 	\
