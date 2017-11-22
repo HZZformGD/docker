@@ -30,9 +30,9 @@ RUN apk add --no-cache --virtual .persistent-deps \
 RUN set -x \
 	&& addgroup -g 82 -S www-data \
 	&& adduser -u 82 -D -S -G www-data www-data \
-	# 备份原始文件
+	# 澶囦唤鍘熷鏂囦欢
 	&& cp /etc/apk/repositories /etc/apk/repositories.bak \
-	# 修改为国内镜像源
+	# 淇敼涓哄浗鍐呴暅鍍忔簮
 	&& echo "http://mirrors.aliyun.com/alpine/v3.6/main/" > /etc/apk/repositories
 
 # 82 is the standard uid/gid for "www-data" in Alpine

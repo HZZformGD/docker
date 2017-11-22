@@ -1,0 +1,1 @@
+winpty docker run -it --rm --name php72sw-$RANDOM -v $(pwd):/var/www/html -w /var/www/html php72:sw php $*

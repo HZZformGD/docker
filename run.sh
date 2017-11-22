@@ -48,3 +48,6 @@ php_version=$2
 [[ $cmd == "stop" ]] && stop
 [[ $cmd == "restart" ]] && restart
 [[ $cmd == "fpmch" ]] && chage $php_version
+
+
+# winpty docker run -it --rm --name=tmp-$RANDOM -p --link php72sw 9000:9000 -v $PWD:/var/www/html -w /var/www/html php72:sw php test.php

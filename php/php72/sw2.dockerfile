@@ -44,12 +44,10 @@ COPY docker-php-source /usr/local/bin/
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
 RUN set -xe; \
-    #备份
-    && cp /etc/apk/repositories /etc/apk/repositories.bak \
-	# 修改为国内镜像源
+    cp /etc/apk/repositories /etc/apk/repositories.bak \
 	&& echo "http://mirrors.aliyun.com/alpine/v3.6/main/" > /etc/apk/repositories \
 	\
-    apk add --no-cache --virtual .persistent-deps \
+    && apk add --no-cache --virtual .persistent-deps \
 		ca-certificates \
 		curl \
 		tar \
@@ -100,10 +98,15 @@ RUN set -xe; \
 		coreutils \
 		curl-dev \
 		libedit-dev \
-		openssl-dev \
+		libressl-dev \
 		libxml2-dev \
 		# sqlite-dev \
         mysql-dev \
+		hiredis-dev \
+		libmcrypt-dev \
+		gmp-dev icu-dev \
+		linux-headers \
+		musl \ 
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
@@ -144,6 +147,8 @@ RUN set -xe; \
 	&& pecl install redis \
 	&& docker-php-ext-enable redis \
 	&& docker-php-ext-install pcntl shmop posix \
+	&& pecl install swoole \
+	&& docker-php-ext-enable swoole \
 	\ 	
 	&& cd / \
 	&& docker-php-source delete \

@@ -28,6 +28,11 @@ alias php72nts='sudo docker run -it --rm --name my-running-script -v "$PWD":/usr
 echo alias php72nts='sudo docker run -it --rm --name my-running-script -v "$PWD":/usr/src/myapp -w /usr/src/myapp php72:fpm  php' >> ~/.bashrc
 source ~/.bashrc
 
+alias php72sw='sudo docker run -it --rm --name my-running-script -v "$PWD":/var/www/html -w /var/www/html php72:sw  php'
+
+"C:\Program Files\Git\usr\bin\mintty.exe" -i "c:\Program Files\Docker Toolbox\docker-quickstart-terminal.ico" /usr/bin/bash --login -i  "c:\Program Files\Docker Toolbox\start.sh"
+
+
 # TODO 使用dockerfile编译拓展
 # TODO 抽取php配置文件
 
