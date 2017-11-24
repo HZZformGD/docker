@@ -17,17 +17,17 @@ services:
       - php
   php:
     # image: "${DOCKER_USER}/lnmp-php:v1.2"
-    image: "php72:sw"
+    image: "php53:fpm"
     # build:
     #     context: .
     #     dockerfile: Dockerfile.php
     networks:
         - frontend
-        # - backend
-    # environment:
-    #     MYSQL_PASSWORD: Passw0rd
-    # depends_on:
-    #     - mysql
+        - backend
+    environment:
+        MYSQL_PASSWORD: Passw0rd
+    depends_on:
+        - mysql
     entrypoint:
       - php-fpm
     volumes:
@@ -35,20 +35,23 @@ services:
     ports:
       - "9000:9000"
         
-  # mysql:
-  #     image: mysql:5.7
-  #     volumes:
-  #         - mysql-data:/var/lib/mysql
-  #     environment:
-  #         TZ: 'Asia/Shanghai'
-  #         MYSQL_ROOT_PASSWORD: Passw0rd
-  #     command: ['mysqld', '--character-set-server=utf8']
-  #     networks:
-  #         - backend
+  mysql:
+      image: mysql:5.6.38
+      # image: mysql:8.0.3
+      volumes:
+          - /d/virtualsys/swap/docker/volumes/mysql:/var/lib/mysql
+      environment:
+          TZ: 'Asia/Shanghai'
+          MYSQL_ROOT_PASSWORD: Passw0rd
+      command: ['mysqld', '--character-set-server=utf8']
+      networks:
+          - backend
+      ports:
+        - "3306:3306"
 # volumes:
 #     # mysql-data:
 #     # - /var/lib/
 #   - datavolume:/var/lib/mysql 
 networks:
     frontend:
-    # backend:
+    backend:

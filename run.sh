@@ -1,5 +1,7 @@
 #!/bin/bash
-
+####################################
+#   使用docker-compose代替          #
+####################################
 function stop ( ) {
     docker stop nginx && sudo docker rm nginx
     docker stop phpfpm && sudo docker rm phpfpm    

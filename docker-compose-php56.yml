@@ -17,7 +17,7 @@ services:
       - php
   php:
     # image: "${DOCKER_USER}/lnmp-php:v1.2"
-    image: "php72:sw"
+    image: "php56:fpm"
     # build:
     #     context: .
     #     dockerfile: Dockerfile.php

@@ -189,7 +189,7 @@ RUN set -xe; \
 		echo 'daemonize = no'; \
 		echo; \
 		echo '[www]'; \
-		# echo 'listen = [::]:9000'; \
+		echo 'listen = 0.0.0.0:9000'; \
 	} | tee php-fpm.d/zz-docker.conf
 
 ENTRYPOINT ["docker-php-entrypoint"]

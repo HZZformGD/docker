@@ -43,6 +43,9 @@ COPY docker-php-source /usr/local/bin/
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
 RUN set -xe; \
+	# cp /etc/apk/repositories /etc/apk/repositories.bak \
+	# && echo "http://mirrors.aliyun.com/alpine/v3.4/main/" > /etc/apk/repositories \
+	\
 	apk add --no-cache --virtual .persistent-deps \
 		ca-certificates \
 		curl \
@@ -96,7 +99,8 @@ RUN set -xe; \
 		libedit-dev \
 		openssl-dev \
 		libxml2-dev \
-		sqlite-dev \
+		# sqlite-dev \
+		mysql-dev \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
@@ -122,6 +126,7 @@ RUN set -xe; \
 		--with-libedit \
 		--with-openssl \
 		--with-zlib \
+		--with-pdo-mysql \
 		\
 # bundled pcre is too old for s390x (which isn't exactly a good sign)
 # /usr/src/php/ext/pcre/pcrelib/pcre_jit_compile.c:65:2: error: #error Unsupported architecture
