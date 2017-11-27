@@ -28,3 +28,12 @@ FROM nginx
 # COPY nginx.conf /etc/nginx/nginx.conf
 COPY /etc/nginx* /etc/nginx
 ```
+
+## 使用docker-compose管理容器
+```shell
+docker-compose -f docker-compose.yml up -d
+#docker-compose [-f] stop
+#docker-compose [-f] restart
+```
+
+
