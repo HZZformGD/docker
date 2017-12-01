@@ -100,7 +100,7 @@ RUN set -xe; \
 		openssl-dev \
 		libxml2-dev \
 		# sqlite-dev \
-		mysql-dev \
+		# mysql-dev \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
@@ -126,7 +126,8 @@ RUN set -xe; \
 		--with-libedit \
 		--with-openssl \
 		--with-zlib \
-		--with-pdo-mysql \
+		--with-mysqli=mysqlnd \
+		--with-pdo-mysql=mysqlnd \
 		\
 # bundled pcre is too old for s390x (which isn't exactly a good sign)
 # /usr/src/php/ext/pcre/pcrelib/pcre_jit_compile.c:65:2: error: #error Unsupported architecture

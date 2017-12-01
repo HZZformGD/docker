@@ -101,7 +101,7 @@ RUN set -xe; \
 		libressl-dev \
 		libxml2-dev \
 		# sqlite-dev \
-        mysql-dev \
+        # mysql-dev \
 		hiredis-dev \
 		libmcrypt-dev \
 		gmp-dev icu-dev \
@@ -136,7 +136,8 @@ RUN set -xe; \
 # bundled pcre is too old for s390x (which isn't exactly a good sign)
 # /usr/src/php/ext/pcre/pcrelib/pcre_jit_compile.c:65:2: error: #error Unsupported architecture
 		--with-pcre-regex=/usr \
-        --with-pdo_mysql \
+		--with-mysqli=mysqlnd \
+        --with-pdo_mysql=mysqlnd \
 		\
 		$PHP_EXTRA_CONFIGURE_ARGS \
 	&& make -j "$(nproc)" \
