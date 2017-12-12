@@ -32,6 +32,7 @@ services:
       - php-fpm
     volumes:
       - /d/virtualsys/swap:/var/www/html
+      - /d/virtualsys/swap/docker/volumes/php/php53/php-fpm.d:/usr/local/etc/php-fpm.d
     ports:
       - "9000:9000"
         
